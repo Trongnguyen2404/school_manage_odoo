@@ -37,7 +37,7 @@
                     </group>
                     <notebook>
                         <page string="Students" name="students">
-                            <field name="student_ids" nolabel="1">
+                            <field name="student_ids" nolabel="1" widget="many2many">
                                 <tree editable="bottom">
                                     <field name="name"/>
                                     <field name="birth_date"/>
