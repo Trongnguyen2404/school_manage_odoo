@@ -15,7 +15,15 @@ class Student(models.Model):
     # Thêm tracking=True để theo dõi thay đổi trong chatter
     name = fields.Char(string='Tên', required=True, tracking=True)
     age = fields.Integer(string='Tuổi', required=True, tracking=True)
-    student_class = fields.Char(string='Lớp', tracking=True)
+    # student_class = fields.Char(string='Lớp', tracking=True)
+    class_id = fields.Many2one(
+        'student.class',  # Liên kết tới model lớp học mới
+        string='Lớp',
+        required=True,  # Nên yêu cầu sinh viên phải thuộc về một lớp
+        tracking=True,
+        index=True,  # Giúp tìm kiếm theo lớp nhanh hơn
+        ondelete='restrict'  # Ngăn xóa lớp nếu còn sinh viên
+    )
     status = fields.Selection([
         ('studying', 'Đang học'),
         ('graduated', 'Đã tốt nghiệp')
