@@ -1,0 +1,6 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<odoo noupdate="1"> &lt;!&ndash; noupdate="1" để không ghi đè dữ liệu khi nâng cấp &ndash;&gt;-->
+<!--    <function model="student.record" name="_load_records_from_file">-->
+<!--         <value>ngay_3/data/student_data.csv</value>-->
+<!--    </function>-->
+<!--</odoo>-->

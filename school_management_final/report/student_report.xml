@@ -1,0 +1,65 @@
+<odoo>
+    <template id="student_report_template">
+        <t t-call="web.html_container">
+             <!-- Lặp 1 lần để lấy context company cho layout -->
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <!-- Header tùy chỉnh -->
+                    <div class="text-center mb16">
+                        <!-- Đảm bảo đường dẫn logo đúng -->
+                        <img t-att-src="'/school_management_final/static/description/icon.png'"
+                             style="max-height:60px; margin-bottom:8px;" alt="School Logo"/>
+                        <h2 style="margin:0;">Trường Đại học XYZ</h2>
+                        <p style="margin:0 0 12px;">Địa chỉ: 123 Đường ABC, Thành phố DEF</p>
+                        <hr/>
+                    </div>
+                    <!-- Nội dung báo cáo -->
+                    <div class="page text-center">
+                        <h3>Danh sách sinh viên</h3>
+                        <table class="table table-sm mt8">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%;">#</th>
+                                    <th style="width:40%;">Tên</th>
+                                    <th style="width:15%;">Tuổi</th>
+                                    <th style="width:15%;">Lớp</th>
+                                    <th style="width:25%">Giới tính</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="i" t-value="0"/>
+                                <t t-foreach="docs" t-as="student">
+                                    <t t-set="i" t-value="i + 1"/>
+                                    <tr>
+                                        <td><span t-esc="i"/></td>
+                                        <!-- Sử dụng t-field -->
+                                        <td><span t-field="student.name"/></td>
+                                        <td><span t-field="student.age"/></td>
+                                        <td><span t-field="student.classroom_id.name"/></td>
+                                        <!-- Sửa lại trường gender -->
+                                        <td><span t-field="student.gender"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                         <p class="mt16">
+                            <strong>Tổng số sinh viên:</strong> <span t-esc="len(docs)"/>
+                        </p>
+                    </div>
+                </t>
+             </t>
+        </t>
+    </template>
+
+    <record id="action_student_report" model="ir.actions.report">
+        <field name="name">Báo cáo sinh viên</field>
+        <field name="model">school.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_management_final.student_report_template</field>
+        <!-- THÊM CÁC TRƯỜNG CÒN THIẾU -->
+        <field name="report_file">school_management_final.student_report_template</field>
+        <field name="print_report_name">'Bao cao Sinh vien'</field> <!-- Tên file khi tải về -->
+        <field name="binding_model_id" ref="model_school_student"/> <!-- Liên kết với model -->
+        <field name="binding_type">report</field> <!-- Loại liên kết -->
+    </record>
+</odoo>

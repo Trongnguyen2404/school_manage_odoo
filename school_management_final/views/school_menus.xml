@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu gốc -->
+    <menuitem id="school_management_final_root"
+              name="School Management Final"
+              sequence="10"
+              web_icon="school_management_final,static/description/icon.png"/>
+
+    <!-- Menu trung gian -->
+    <menuitem id="school_management_final_master_data_menu"
+              name="Master Data"
+              parent="school_management_final_root"
+              sequence="10"/>
+
+    <!-- Menu lá - Cần có 'action' -->
+    <menuitem id="school_classroom_menu_action"
+              name="Classrooms"
+              parent="school_management_final_master_data_menu"
+              action="school_classroom_action"
+              sequence="10"/>
+
+    <menuitem id="school_teacher_menu_action"
+              name="Teachers"
+              parent="school_management_final_master_data_menu"
+              action="school_teacher_action"
+              sequence="20"/>
+
+    <menuitem id="school_student_menu_action"
+              name="Students"
+              parent="school_management_final_master_data_menu"
+              action="school_student_action"
+              sequence="30"/>
+</odoo>

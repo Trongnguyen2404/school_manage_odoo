@@ -1,0 +1,43 @@
+<odoo>
+
+    <record id="view_users_form_inherit_student" model="ir.ui.view">
+        <field name="name">res.users.form.inherit.student</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='login']" position="after">
+                <field name="x_allowed_class" placeholder="Ví dụ: 10A,11B"/>
+            </xpath>
+        </field>
+    </record>
+
+        <!-- Thêm trường vào form view của res.partner -->
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Chèn vào vị trí sau trường 'name' -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="is_student"/>
+                <field name="student_id" placeholder="student_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Thêm trường vào tree view của res.partner -->
+    <record id="view_partner_tree_inherit" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <!-- Thêm cột mới vào tree view -->
+            <!-- SỬA TỪ name THÀNH display_name -->
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="is_student"/>
+                <!-- Thêm optional="show" hoặc optional="hide" để người dùng có thể ẩn/hiện cột -->
+                <field name="student_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

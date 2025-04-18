@@ -1,0 +1,30 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- QWeb Template -->
+        <template id="student_welcome_email_qweb">
+            <t t-name="ngay_3.student_welcome_email_qweb">
+                <p>Chào <t t-esc="object.name"/>!</p>
+                <p>Chúc mừng bạn đã được nhập học vào lớp <t t-esc="object.student_class"/>.</p>
+                <p>Chúc bạn học tập tốt và thành công!</p>
+            </t>
+        </template>
+
+        <!-- Mail Template -->
+        <record id="student_welcome_email_template" model="mail.template">
+            <field name="name">Welcome Email for New Student</field>
+            <field name="model_id" ref="ngay_3.model_student_record"/>
+            <field name="subject">Chào mừng ${object.name} đến với trường</field>
+            <field name="email_from">no-reply@yourcompany.com</field>
+            <field name="email_to">${object.email}</field>
+            <field name="body_html">
+                <![CDATA[
+                    <t t-call="ngay_3.student_welcome_email_qweb">
+                        <t t-set="object" t-value="object"/>
+                    </t>
+                ]]>
+            </field>
+        </record>
+
+    </data>
+</odoo>

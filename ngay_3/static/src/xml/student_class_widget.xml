@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ngay_3.StudentClassWidget" owl="1">
+        <div class="p-3 bg-white border rounded">
+            <h4 class="mb-3">Tìm kiếm Sinh viên theo Lớp</h4>
+
+            <!-- Hiển thị lỗi nếu có -->
+            <div t-if="state.error" class="alert alert-danger" role="alert">
+                <t t-esc="state.error"/>
+            </div>
+
+            <!-- Dropdown chọn lớp -->
+            <div class="mb-3 row align-items-center">
+                <!-- ... (code dropdown không đổi) ... -->
+                 <label for="class_selector" class="col-sm-2 col-form-label fw-bold">Chọn Lớp:</label>
+                <div class="col-sm-8">
+                    <select class="form-select" id="class_selector" t-on-change="onClassChange" t-att-disabled="state.isLoadingClasses">
+                        <option value="">-- Chọn một lớp --</option>
+                        <t t-if="state.isLoadingClasses">
+                             <option disabled="true">Đang tải danh sách lớp...</option>
+                        </t>
+                        <t t-foreach="state.classList" t-as="className" t-key="className">
+                            <option t-att-value="className" t-att-selected="className === state.selectedClass">
+                                <t t-esc="className"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                 <div class="col-sm-2 text-center">
+                    <span t-if="state.isLoadingClasses or state.isLoadingStudents" class="fa fa-spinner fa-spin" title="Đang tải..." role="img" aria-label="Loading"/>
+                 </div>
+            </div>
+
+            <!-- Bảng hiển thị danh sách sinh viên -->
+            <div t-if="state.selectedClass and !state.isLoadingStudents">
+                <h5 class="mt-4 mb-3">Danh sách sinh viên lớp <t t-esc="state.selectedClass"/></h5>
+                <t t-if="state.students.length > 0">
+                    <!-- === THÊM THẺ DIV BAO QUANH BẢNG VỚI CLASS MỚI === -->
+                    <div class="student-table-scrollable-container">
+                        <table class="table table-bordered table-striped table-hover mb-0"> <!-- Thêm mb-0 để loại bỏ margin mặc định của table -->
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tên</th>
+                                    <th>Tuổi</th>
+                                    <th>Email</th>
+                                    <th>Tình trạng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="state.students" t-as="student" t-key="student.id">
+                                    <td><t t-esc="student.id"/></td>
+                                    <td><t t-esc="student.name"/></td>
+                                    <td><t t-esc="student.age"/></td>
+                                    <td><t t-esc="student.email"/></td>
+                                    <td><t t-esc="student.status_display"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- ================================================ -->
+                </t>
+                <t t-else="">
+                    <div class="alert alert-info" role="alert">
+                        Không tìm thấy sinh viên nào cho lớp <t t-esc="state.selectedClass"/>.
+                    </div>
+                </t>
+            </div>
+             <div t-elif="!state.selectedClass" class="mt-4 text-muted">
+                 Vui lòng chọn một lớp để xem danh sách sinh viên.
+             </div>
+        </div>
+    </t>
+
+</templates>

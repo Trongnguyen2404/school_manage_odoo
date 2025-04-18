@@ -1,0 +1,82 @@
+<odoo>
+    <!-- Tree View - Danh sách sinh viên -->
+    <record id="student_tree_view" model="ir.ui.view">
+        <field name="name">student.tree.view</field>
+        <field name="model">student.record</field>
+        <field name="arch" type="xml">
+            <tree string="Danh sách sinh viên">
+                <header>
+                    <button name="compute_average_age"
+                            string="Tính TB tuổi (chọn SV)"
+                            type="object"
+                            class="oe_highlight"
+                            confirm="Tính tuổi trung bình cho các sinh viên được chọn?"/>
+                </header>
+                <field name="name" string="Tên"/>
+                <field name="age" string="Tuổi"/>
+                <field name="student_class" string="Lớp"/>
+                <field name="email" string="Email"/>
+                <field name="status" string="Tình trạng"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View - Chi tiết sinh viên -->
+    <record id="student_form_view" model="ir.ui.view">
+        <field name="name">student.form.view</field>
+        <field name="model">student.record</field>
+        <field name="arch" type="xml">
+            <form string="Thông tin sinh viên">
+                <sheet>
+                    <group>
+                        <field name="name" string="Tên"/>
+                        <field name="age" string="Tuổi"/>
+                        <field name="student_class" string="Lớp"/>
+                        <field name="email" string="Email"/>
+                        <field name="status" string="Tình trạng"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View - Danh sách sinh viên -->
+    <record id="student_kanban_view" model="ir.ui.view">
+        <field name="name">student.kanban.view</field>
+        <field name="model">student.record</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="student_class">
+                <field name="status"/>
+                <templates>
+                    <!-- SỬA TÊN TEMPLATE THÀNH "kanban-box" -->
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click" t-att-data-status="record.status.raw_value">
+                            <div class="oe_kanban_content">
+                                <h4><field name="name"/></h4>
+                                <ul>
+                                    <li>Tuổi: <field name="age"/></li>
+                                    <li>Lớp: <field name="student_class"/></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action để mở window view sinh viên -->
+    <record id="student_action" model="ir.actions.act_window">
+        <field name="name">Quản lý sinh viên</field>
+        <field name="res_model">student.record</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <!-- Menu items -->
+    <menuitem id="main_menu" name="Giáo dục" sequence="10"/>
+    <menuitem id="student_menu" name="Quản lý sinh viên" parent="main_menu" sequence="10"/>
+    <menuitem id="student_submenu" name="Danh sách" parent="student_menu" action="student_action" sequence="20"/>
+
+    <menuitem id="student_submenu2" name="Danh sách 2" parent="student_menu" action="student_action" sequence="30"/>
+
+</odoo>

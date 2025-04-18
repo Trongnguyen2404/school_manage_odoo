@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <template id="student_list_template" name="Danh sách Sinh viên">
+            <t t-call="website.layout">
+                <div id="wrap" class="container">
+                    <h1><t t-esc="page_title or 'Danh sách Sinh viên'"/></h1>
+
+                    <t t-if="request.params.get('submitted') == '1'">
+                        <div class="alert alert-success" role="alert">
+                            Đã thêm sinh viên mới thành công!
+                        </div>
+                    </t>
+
+                    <a href="/student/add" class="btn btn-primary mb-3">Thêm Sinh viên mới</a>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Tuổi</th>
+                                <th>Lớp</th>
+                                <th>Email</th>
+                                <th>Tình trạng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="not students">
+                                 <tr>
+                                    <td colspan="5">Không có sinh viên nào để hiển thị.</td>
+                                </tr>
+                            </t>
+                            <t t-foreach="students" t-as="student">
+                                <tr>
+                                    <td><t t-esc="student.name"/></td>
+                                    <td><t t-esc="student.age"/></td>
+                                    <td><t t-esc="student.student_class"/></td>
+                                    <td><t t-esc="student.email"/></td>
+                                    <td><t t-esc="dict(student._fields['status'].selection).get(student.status)"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <template id="student_add_form_template" name="Thêm Sinh viên">
+            <t t-call="website.layout">
+                <div id="wrap" class="container">
+                     <h1><t t-esc="page_title or 'Thêm Sinh viên mới'"/></h1>
+
+                    <t t-if="error">
+                        <div class="alert alert-danger" role="alert">
+                            <t t-esc="error"/>
+                        </div>
+                    </t>
+
+                    <form action="/student/add" method="POST">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="form-group row">
+                            <label for="student_name" class="col-sm-2 col-form-label">Tên Sinh viên <span class="text-danger">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="student_name" name="student_name" required="required" t-att-value="form_data.get('student_name') if form_data else None"/>
+                            </div>
+                        </div>
+                         <div class="form-group row mt-2">
+                            <label for="student_age" class="col-sm-2 col-form-label">Tuổi <span class="text-danger">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="student_age" name="student_age" required="required" t-att-value="form_data.get('student_age') if form_data else None"/>
+                            </div>
+                        </div>
+                         <div class="form-group row mt-2">
+                            <label for="student_class" class="col-sm-2 col-form-label">Lớp</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="student_class" name="student_class" t-att-value="form_data.get('student_class') if form_data else None"/>
+                            </div>
+                        </div>
+                         <div class="form-group row mt-2">
+                            <label for="student_email" class="col-sm-2 col-form-label">Email <span class="text-danger">*</span></label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="student_email" name="student_email" required="required" t-att-value="form_data.get('student_email') if form_data else None"/>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-3">
+                             <div class="offset-sm-2 col-sm-10">
+                                 <button type="submit" class="btn btn-primary">Thêm Sinh viên</button>
+                                 <a href="/students" class="btn btn-secondary ml-2">Hủy bỏ</a>
+                             </div>
+                        </div>
+                    </form>
+                </div>
+            </t>
+        </template>
+        </odoo>

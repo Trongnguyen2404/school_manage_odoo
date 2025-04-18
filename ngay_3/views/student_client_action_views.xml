@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Định nghĩa Client Action -->
+    <record id="action_student_class_widget" model="ir.actions.client">
+        <field name="name">Tìm kiếm Sinh viên (OWL)</field>
+        <field name="tag">ngay_3.student_class_action_tag</field>
+    </record>
+
+    <!-- Tạo Menu Item để gọi Client Action -->
+    <!-- Đặt dưới menu Quản lý sinh viên đã có -->
+    <menuitem id="student_owl_widget_submenu"
+              name="Tìm kiếm (OWL)"
+              parent="student_menu" sequence="40" action="action_student_class_widget"/>
+
+</odoo>

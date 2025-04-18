@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="school_classroom_action" model="ir.actions.act_window">
+        <field name="name">Classrooms</field>
+        <field name="res_model">school.classroom</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="school_classroom_view_tree" model="ir.ui.view">
+        <field name="name">school.classroom.tree</field>
+        <field name="model">school.classroom</field>
+        <field name="arch" type="xml">
+            <tree string="Classrooms">
+                <field name="name"/>
+                <field name="teacher_id"/>
+                <field name="student_ids" widget="many2many_tags" string="Student Count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="school_classroom_view_form" model="ir.ui.view">
+        <field name="name">school.classroom.form</field>
+        <field name="model">school.classroom</field>
+        <field name="arch" type="xml">
+            <form string="Classroom">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Grade 1A"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="teacher_id" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Students" name="students">
+                            <field name="student_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="birth_date"/>
+                                    <field name="age"/>
+                                    <field name="gender"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="school_classroom_view_search" model="ir.ui.view">
+        <field name="name">school.classroom.search</field>
+        <field name="model">school.classroom</field>
+        <field name="arch" type="xml">
+            <search string="Search Classrooms">
+                <field name="name"/>
+                <field name="teacher_id"/>
+                <filter string="Has Students" name="has_students" domain="[('student_ids', '!=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Teacher" name="group_by_teacher" context="{'group_by':'teacher_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

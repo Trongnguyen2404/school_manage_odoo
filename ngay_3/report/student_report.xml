@@ -1,0 +1,53 @@
+<odoo>
+    <template id="student_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <!-- Logo & thông tin trường -->
+                <div class="text-center mb16">
+                    <img t-att-src="'/ngay_3/static/src/img/school_logo.png'"
+                         style="max-height:60px; margin-bottom:8px;"/>
+                    <h2 style="margin:0;">Trường Đại học XYZ</h2>
+                    <p style="margin:0 0 12px;">Địa chỉ: 123 Đường ABC, Thành phố DEF</p>
+                    <hr/>
+                </div>
+                <!-- Nội dung báo cáo -->
+                <div class="page">
+                    <h3>Danh sách sinh viên</h3>
+                    <table class="table table-sm mt8">
+                        <thead>
+                            <tr>
+                                <th style="width:5%;">#</th>
+                                <th style="width:45%;">Tên</th>
+                                <th style="width:25%;">Tuổi</th>
+                                <th style="width:25%;">Lớp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Khởi tạo counter -->
+                            <t t-set="i" t-value="0"/>
+                            <t t-foreach="docs" t-as="student">
+                                <!-- Tăng counter lên 1 -->
+                                <t t-set="i" t-value="i + 1"/>
+                                <tr>
+                                    <td><t t-esc="i"/></td>
+                                    <td><t t-esc="student.name"/></td>
+                                    <td><t t-esc="student.age"/></td>
+                                    <td><t t-esc="student.student_class or '-'"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_student_report" model="ir.actions.report">
+        <field name="name">Báo cáo sinh viên</field>
+        <field name="model">student.record</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ngay_3.student_report_template</field>
+        <field name="binding_model_id" ref="model_student_record"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

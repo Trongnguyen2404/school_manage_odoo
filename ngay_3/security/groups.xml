@@ -1,0 +1,8 @@
+<odoo>
+    <!-- Định nghĩa nhóm Giáo viên -->
+    <record id="group_teacher" model="res.groups">
+        <field name="name">Giáo viên</field>
+        <!-- Đặt vào category ẩn, tránh hiển thị lung tung trong Settings → Users & Companies → Groups -->
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+</odoo>

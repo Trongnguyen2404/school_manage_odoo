@@ -1,0 +1,9 @@
+<odoo>
+    <record id="rule_teacher_class" model="ir.rule">
+        <field name="name">Teacher: only own class students</field>
+        <field name="model_id" ref="model_student_record"/>
+        <!-- Tách x_allowed_classes thành list và so sánh với student_class -->
+        <field name="domain_force">[('student_class', 'in', user.x_allowed_class.split(',') if user.x_allowed_class else [])]</field>
+        <field name="groups" eval="[(4, ref('ngay_3.group_teacher'))]"/>
+    </record>
+</odoo>
